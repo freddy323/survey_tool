@@ -1,0 +1,14 @@
+{
+  "name": "app",
+  "private": true,
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.13",
+    "tailwindcss": "^3.4.1"
+  },
+  "scripts": {
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "tailwindcss -i ./app/javascript/stylesheets/application.css -o ./app/assets/builds/application.css --minify",
+    "watch": "yarn build --watch"
+  }
+}

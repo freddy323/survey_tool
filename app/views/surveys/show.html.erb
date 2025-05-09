@@ -1,0 +1,33 @@
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8"><%= @survey.question %></h1>
+
+    <% if @total_responses > 0 %>
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Current Results</h2>
+        <div class="mb-4">
+            <div class="flex justify-between mb-1">
+                <span>Yes: <%= @yes_count %> (<%= (@yes_count.to_f / @total_responses * 100).round %>% )</span>
+                <span>No: <%= @no_count %> (<%= (@no_count.to_f / @total_responses * 100).round %>% )</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-4">
+                <div class="bg-green-500 h-4 rounded-full" style="width: <%= (@yes_count.to_f / @total_responses * 100).round %>%"></div>
+            </div>
+        </div>
+    </div>
+    <% else %>
+    <p class="text-gray-500 mb-8">No responses yet</p>
+    <% end %>
+
+    <div class="bg-white p-6 rounded-lg shadow-sm border">
+        <h2 class="text-xl font-semibold mb-4">Submit your response</h2>
+
+        <div class="flex gap-4">
+            <%= button_to "Yes", record_response_survey_path(@survey, answer: 'yes'), method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+            <%= button_to "No", record_response_survey_path(@survey, answer: 'no'), method: :post, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <%= link_to "Back to all surveys", surveys_path, class: "text-blue-500 hover:text-blue-700" %>
+    </div>
+</div>

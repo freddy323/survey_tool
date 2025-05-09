@@ -1,0 +1,35 @@
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Surveys</h1>
+
+    <div class="mb-8">
+        <%= link_to "Create New Survey", new_survey_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+
+    <div class="grid gap-6">
+        <% @surveys.each do |survey| %>
+        <div class="border rounded-lg p-6 shadow-sm">
+            <h2 class="text-xl font-semibold mb-2"><%= survey.question %></h2>
+
+            <% yes_count = survey.responses.where(answer: true).count %>
+            <% no_count = survey.responses.where(answer: false).count %>
+            <% total = yes_count + no_count %>
+
+            <% if total > 0 %>
+            <div class="mb-4">
+                <div class="flex justify-between mb-1">
+                    <span>Yes: <%= yes_count %> (<%= (yes_count.to_f / total * 100).round %>% )</span>
+                    <span>No: <%= no_count %> (<%= (no_count.to_f / total * 100).round %>% )</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div class="bg-green-500 h-4 rounded-full" style="width: <%= (yes_count.to_f / total * 100).round %>%"></div>
+                </div>
+            </div>
+            <% else %>
+            <p class="text-gray-500 mb-4">No responses yet</p>
+            <% end %>
+
+            <%= link_to "Respond to Survey", survey_path(survey), class: "bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" %>
+        </div>
+        <% end %>
+    </div>
+</div>
